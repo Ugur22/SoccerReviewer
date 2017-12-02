@@ -1,0 +1,23 @@
+    Schema::create('reviews', function($table)
+        {
+            $table->increments('id');
+            $table->integer('speed');
+            $table->integer('passing');
+            $table->integer('shooting');
+            $table->integer('teamwork');
+            $table->integer('defence');
+            $table->integer('stamina');
+            $table->integer('keeper');
+            $table->integer('overall');
+            $table->integer('player_id')->unsigned();
+            $table->integer('reviewer_id')->unsigned();
+
+            $table->foreign('player_id')
+                ->references('id')->on('players')
+                ->onDelete('cascade');
+
+            $table->foreign('reviewer_id')
+                ->references('id')->on('players')
+                ->onDelete('cascade');
+
+        });
