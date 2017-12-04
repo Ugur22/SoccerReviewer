@@ -11,12 +11,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Players::create([
-            'name' => 'Ugur Ertas',
-            'speed' => 80,
-            'passing' => 80,
-            'Shooting' => 80,
-            'Teamwork' => 80,
-            'Defence' => 80,
+            'name' => 'Robert',
+            'speed' => 70,
+            'passing' =>  70,
+            'Shooting' =>  70,
+            'Teamwork' =>  70,
+            'Defence' =>  70,
             'Stamina' => 80,
             'Keeper' => 80,
             'total' => 80,

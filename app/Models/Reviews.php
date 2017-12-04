@@ -17,4 +17,6 @@ class Reviews extends Model
      */
     protected $table = 'reviews';
 
+
+
 }
