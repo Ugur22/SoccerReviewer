@@ -4,9 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
- class Players extends Model
+class Players extends Model
 {
-
      /**
       * table from players
       * @var
