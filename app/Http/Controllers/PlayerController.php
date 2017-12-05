@@ -40,66 +40,13 @@ class PlayerController extends Controller
     public function getPlayer($id)
     {
 
-        $reviews = DB::table('reviews')->where('player_id', $id)->get();
-
-
-        $speed = 0;
-        $passing = 0;
-        $Shooting = 0;
-        $Teamwork = 0;
-        $Defence = 0;
-        $Stamina = 0;
-        $Keeper = 0;
-        $total = 0;
-
-
-        foreach ($reviews as $review) {
-            $speed += $review->speed;
-            $passing += $review->passing;
-            $Shooting += $review->shooting;
-            $Teamwork += $review->teamwork;
-            $Defence += $review->defence;
-            $Stamina += $review->stamina;
-            $Keeper += $review->keeper;
-        }
-
-
-        $playerObject = (object)[];
-        $playerObject->speedAverage = $speed / count($reviews);
-        $playerObject->passingAverage = $passing / count($reviews);
-        $playerObject->ShootingAverage = $Shooting / count($reviews);
-        $playerObject->TeamworkAverage = $Teamwork / count($reviews);
-        $playerObject->DefenceAverage = $Defence / count($reviews);
-        $playerObject->StaminaAverage = $Stamina / count($reviews);
-        $playerObject->KeeperAverage = $Keeper / count($reviews);
-
-        foreach ($playerObject as $item) {
-            $total += $item;
-        }
-
-
-        $playerObject->totalAverage = $total / 7;
-
-
         $player = Players::find($id);
-        $player->Speed = $speed / count($reviews);
-        $player->passing = $passing / count($reviews);
-        $player->Shooting = $Shooting / count($reviews);
-        $player->Teamwork = $Teamwork / count($reviews);
-        $player->Defence = $Defence / count($reviews);
-        $player->Stamina = $Stamina / count($reviews);
-        $player->Keeper = $Keeper / count($reviews);
-        $player->total = $total / 7;
-        $player->save();
-
-
-        $playerId = Players::find($id);
 
         if (empty($player)) {
             throw new ModelNotFoundException();
         }
 
-        return response()->json($playerId);
+        return response()->json($player);
     }
 
     public function createPlayer(Request $request)
@@ -139,13 +86,13 @@ class PlayerController extends Controller
     {
         $player = Players::find($id);
         $player->name = $request->input('name');
-        $player->Speed = $request->input('Speed');
+        $player->speed = $request->input('speed');
         $player->passing = $request->input('passing');
-        $player->Shooting = $request->input('Shooting');
-        $player->Teamwork = $request->input('Teamwork');
-        $player->Defence = $request->input('Defence');
-        $player->Stamina = $request->input('Stamina');
-        $player->Keeper = $request->input('Keeper');
+        $player->shooting = $request->input('shooting');
+        $player->teamwork = $request->input('teamwork');
+        $player->defence = $request->input('defence');
+        $player->stamina = $request->input('stamina');
+        $player->keeper = $request->input('keeper');
         $player->total = $request->input('total');
         $player->save();
         return response()->json($player);

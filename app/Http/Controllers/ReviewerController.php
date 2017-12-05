@@ -11,9 +11,9 @@ namespace App\Http\Controllers;
 use App\Models\Reviews;
 use App\Models\Players;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
 
 class ReviewerController
 {
@@ -63,33 +63,104 @@ class ReviewerController
 
         $speed = 0;
         $passing = 0;
-        $Shooting = 0;
-        $Teamwork = 0;
-        $Defence = 0;
-        $Stamina = 0;
-        $Keeper = 0;
+        $shooting = 0;
+        $teamwork = 0;
+        $defence = 0;
+        $stamina = 0;
+        $keeper = 0;
         $total = 0;
 
 
         foreach ($reviews as $review) {
             $speed += $review->speed;
             $passing += $review->passing;
-            $Shooting += $review->shooting;
-            $Teamwork += $review->teamwork;
-            $Defence += $review->defence;
-            $Stamina += $review->stamina;
-            $Keeper += $review->keeper;
+            $shooting += $review->shooting;
+            $teamwork += $review->teamwork;
+            $defence += $review->defence;
+            $stamina += $review->stamina;
+            $keeper += $review->keeper;
         }
 
 
         $playerObject = (object)[];
         $playerObject->speedAverage = $speed / count($reviews);
         $playerObject->passingAverage = $passing / count($reviews);
-        $playerObject->ShootingAverage = $Shooting / count($reviews);
-        $playerObject->TeamworkAverage = $Teamwork / count($reviews);
-        $playerObject->DefenceAverage = $Defence / count($reviews);
-        $playerObject->StaminaAverage = $Stamina / count($reviews);
-        $playerObject->KeeperAverage = $Keeper / count($reviews);
+        $playerObject->ShootingAverage = $shooting / count($reviews);
+        $playerObject->TeamworkAverage = $teamwork / count($reviews);
+        $playerObject->DefenceAverage = $defence / count($reviews);
+        $playerObject->StaminaAverage = $stamina / count($reviews);
+        $playerObject->KeeperAverage = $keeper / count($reviews);
+
+        foreach ($playerObject as $item) {
+            $total += $item;
+        }
+
+
+        $playerObject->totalAverage = $total / 7;
+
+
+        $player = Players::find(Input::get('player_id'));
+        $player->speed = $speed / count($reviews);
+        $player->passing = $passing / count($reviews);
+        $player->shooting = $shooting / count($reviews);
+        $player->teamwork = $teamwork / count($reviews);
+        $player->defence = $defence / count($reviews);
+        $player->stamina = $stamina / count($reviews);
+        $player->keeper = $keeper / count($reviews);
+        $player->total = $total / 7;
+        $player->save();
+
+
+    }
+
+
+    public function updateReview(Request $request, $id)
+    {
+        $review = Reviews::find($id);
+        $review->speed = $request->input('speed');
+        $review->passing = $request->input('passing');
+        $review->shooting = $request->input('shooting');
+        $review->teamwork = $request->input('teamwork');
+        $review->defence = $request->input('defence');
+        $review->stamina = $request->input('stamina');
+        $review->keeper = $request->input('keeper');
+        $review->player_id = Input::get('player_id');
+        $review->reviewer_id = Input::get('reviewer_id');
+        $review->overall = ($review->speed + $review->passing + $review->shooting + $review->teamwork + $review->defence + $review->stamina + $review->keeper) / 7;
+        $review->save();
+
+        $reviews = DB::table('reviews')->where('player_id', Input::get('player_id'))->get();
+
+
+        $speed = 0;
+        $passing = 0;
+        $shooting = 0;
+        $teamwork = 0;
+        $defence = 0;
+        $stamina = 0;
+        $keeper = 0;
+        $total = 0;
+
+
+        foreach ($reviews as $review) {
+            $speed += $review->speed;
+            $passing += $review->passing;
+            $shooting += $review->shooting;
+            $teamwork += $review->teamwork;
+            $defence += $review->defence;
+            $stamina += $review->stamina;
+            $keeper += $review->keeper;
+        }
+
+
+        $playerObject = (object)[];
+        $playerObject->speedAverage = $speed / count($reviews);
+        $playerObject->passingAverage = $passing / count($reviews);
+        $playerObject->shootingAverage = $shooting / count($reviews);
+        $playerObject->teamworkAverage = $teamwork / count($reviews);
+        $playerObject->defenceAverage = $defence / count($reviews);
+        $playerObject->staminaAverage = $stamina / count($reviews);
+        $playerObject->keeperAverage = $keeper / count($reviews);
 
         foreach ($playerObject as $item) {
             $total += $item;
@@ -102,15 +173,14 @@ class ReviewerController
         $player = Players::find(Input::get('player_id'));
         $player->Speed = $speed / count($reviews);
         $player->passing = $passing / count($reviews);
-        $player->Shooting = $Shooting / count($reviews);
-        $player->Teamwork = $Teamwork / count($reviews);
-        $player->Defence = $Defence / count($reviews);
-        $player->Stamina = $Stamina / count($reviews);
-        $player->Keeper = $Keeper / count($reviews);
+        $player->Shooting = $shooting / count($reviews);
+        $player->Teamwork = $teamwork / count($reviews);
+        $player->Defence = $defence / count($reviews);
+        $player->Stamina = $stamina / count($reviews);
+        $player->Keeper = $keeper / count($reviews);
         $player->total = $total / 7;
         $player->save();
-
-
+        return response()->json($review);
     }
 
 }
