@@ -62,6 +62,8 @@ class PlayerController extends Controller
             $Stamina += $review->stamina;
             $Keeper += $review->keeper;
         }
+
+
         $playerObject = (object)[];
         $playerObject->speedAverage = $speed / count($reviews);
         $playerObject->passingAverage = $passing / count($reviews);
