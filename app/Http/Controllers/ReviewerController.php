@@ -19,7 +19,8 @@ class ReviewerController
 {
 
 
-    public function updatePlayerScores (){
+    public function updatePlayerScores()
+    {
         $reviews = DB::table('reviews')->where('player_id', Input::get('player_id'))->get();
 
 
@@ -100,26 +101,39 @@ class ReviewerController
         return response()->json($review);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function createReview()
     {
 
-        $review = new Reviews();
-        $review->speed = Input::get('speed');
-        $review->passing = Input::get('passing');
-        $review->shooting = Input::get('shooting');
-        $review->teamwork = Input::get('teamwork');
-        $review->defence = Input::get('defence');
-        $review->stamina = Input::get('stamina');
-        $review->keeper = Input::get('keeper');
-        $review->overall = ($review->speed + $review->passing + $review->shooting + $review->teamwork + $review->defence + $review->stamina + $review->keeper) / 7;
-        $review->player_id = Input::get('player_id');
-        $review->reviewer_id = Input::get('reviewer_id');
-        $review->save();
 
-        self::updatePlayerScores();
+        $reviewCheck = Reviews::where([
+            'player_id' => Input::get('player_id'),
+            'reviewer_id' => Input::get('reviewer_id')
+        ])->get();
 
 
-        return response()->json("it worked");
+        if (count($reviewCheck) > 0) {
+
+
+            return response()->json("duplicate review");
+        }
+            $review = new Reviews();
+            $review->speed = Input::get('speed');
+            $review->passing = Input::get('passing');
+            $review->shooting = Input::get('shooting');
+            $review->teamwork = Input::get('teamwork');
+            $review->defence = Input::get('defence');
+            $review->stamina = Input::get('stamina');
+            $review->keeper = Input::get('keeper');
+            $review->reviewer_id = Input::get('reviewer_id');
+            $review->player_id = Input::get('player_id');
+            $review->overall = ($review->speed + $review->passing + $review->shooting + $review->teamwork + $review->defence + $review->stamina + $review->keeper) / 7;
+            $review->save();
+            self::updatePlayerScores();
+
+        return response()->json($review);
 
     }
 
