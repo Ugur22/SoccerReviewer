@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="tests/" tests="2" assertions="2" errors="0" failures="0" skipped="0" time="0.090992">
+    <testsuite name="ExampleTest" file="/Users/ugur/projects/SoccerReviewer/tests/ExampleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.073533">
+      <testcase name="testExample" class="ExampleTest" classname="ExampleTest" file="/Users/ugur/projects/SoccerReviewer/tests/ExampleTest.php" line="11" assertions="1" time="0.073533"/>
+    </testsuite>
+    <testsuite name="PlayerTest" file="/Users/ugur/projects/SoccerReviewer/tests/PlayerTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.017459">
+      <testcase name="testBasicExample" class="PlayerTest" classname="PlayerTest" file="/Users/ugur/projects/SoccerReviewer/tests/PlayerTest.php" line="14" assertions="1" time="0.017459"/>
+    </testsuite>
+  </testsuite>
+</testsuites>
