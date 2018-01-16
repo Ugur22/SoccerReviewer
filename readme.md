@@ -21,3 +21,7 @@ Restful api for Ionic 3 app - SoccerReviewer
 **Show reviews**
 
  api/v1/reviews/id
+
+ ## unit testing & coverage command
+ 
+ ```phpunit --log-junit reports/unitReport.xml --coverage-clover reports/coverage/coverage.xml```
