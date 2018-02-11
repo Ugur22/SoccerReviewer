@@ -138,6 +138,26 @@ class ReviewerController
     }
 
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteReview($id)
+    {
+        $review = Reviews::find($id);
+
+        if (empty($review)) {
+            throw new ModelNotFoundException();
+        }
+        $review->delete();
+        return response()->json($review);
+
+    }
+
+
     public function updateReview(Request $request, $id)
     {
         $review = Reviews::find($id);
