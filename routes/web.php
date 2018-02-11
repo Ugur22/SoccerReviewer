@@ -19,10 +19,11 @@ $router->get('api', 'PlayerController@show');
 $router->get('api/v1/players', 'PlayerController@index');
 $router->get('api/v1/players/{id}','PlayerController@getPlayer');
 $router->post('api/v1/players','PlayerController@createPlayer');
-$router->post('api/v1/players/{id}','PlayerController@deletePlayer');
+$router->delete('api/v1/players/{id}','PlayerController@deletePlayer');
 $router->post('api/v1/players/{id}','PlayerController@updatePlayer');
 
 $router->get('api/v1/review', 'ReviewerController@index');
 $router->get('api/v1/review/{id}','ReviewerController@getReview');
 $router->post('api/v1/review','ReviewerController@createReview');
 $router->post('api/v1/review/{id}','ReviewerController@updateReview');
+$router->delete('api/v1/review/{id}','ReviewerController@deleteReview');
