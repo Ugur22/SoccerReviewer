@@ -153,7 +153,6 @@ class ReviewerController
             throw new ModelNotFoundException();
         }
         $review->delete();
-        self::updatePlayerScores();
         return response()->json($review);
 
     }
