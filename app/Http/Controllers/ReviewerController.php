@@ -116,7 +116,7 @@ class ReviewerController
 
         if (count($reviewCheck) > 0) {
 
-            return response()->json(['status' => 'fail']);
+            return response()->json('Repeated content', 409);
 
         }
             $review = new Reviews();
