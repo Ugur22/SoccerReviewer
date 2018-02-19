@@ -116,8 +116,8 @@ class ReviewerController
 
         if (count($reviewCheck) > 0) {
 
+            return response()->json(['status' => 'fail']);
 
-            return response()->json("duplicate review");
         }
             $review = new Reviews();
             $review->speed = Input::get('speed');
